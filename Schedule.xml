@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UniversitySchedule>
+	<Faculty name="ФІОТ" dean="Корнага Я.І." address="Політехнічна, 41">
+
+		<Department name="Інженерії ПЗ" head="Петренко А.І.">
+
+			<Teacher id="101" name="Олійник В.В." degree="Кандидат наук" position="Доцент">
+				<Subject title="Основи програмування C#" room="305" building="18" type="Лекція" credits="5" hours="150">
+					<Groups>ІП-21, ІП-22, ІП-23</Groups>
+				</Subject>
+				<Subject title="Паттерни проєктування" room="301" building="18" type="Практика" credits="4" hours="120">
+					<Groups>ІП-21</Groups>
+				</Subject>
+			</Teacher>
+
+			<Teacher id="102" name="Коваленко С.С." position="Старший викладач">
+				<Subject title="Бази даних" room="Online" type="Лекція" credits="6" hours="180">
+					<Groups>ІП-24, ІП-25</Groups>
+				</Subject>
+			</Teacher>
+
+		</Department>
+
+		<Department name="Обчислювальної техніки" head="Симоненко В.П.">
+			<Teacher id="103" name="Бондаренко А.А." degree="Доктор наук" position="Професор">
+				<Subject title="Архітектура комп'ютерів" room="115" building="12" type="Лабораторна" credits="5" hours="150">
+					<Groups>ІО-21, ІО-22</Groups>
+				</Subject>
+			</Teacher>
+		</Department>
+
+	</Faculty>
+
+	<Faculty name="ІПСА" dean="Пасічник Н.Р." address="Берестейський пр., 37">
+		<Department name="Математичних методів системного аналізу">
+			<Teacher id="201" name="Шевченко Т.Г." degree="PhD">
+				<Subject title="Теорія ймовірностей" room="202" building="35" type="Лекція" credits="4" hours="120">
+					<Groups>КА-21, КА-22</Groups>
+				</Subject>
+			</Teacher>
+		</Department>
+	</Faculty>
+
+</UniversitySchedule>

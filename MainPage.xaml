@@ -1,11 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OOP_Lab2"
              x:Class="OOP_Lab2.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="XML Analyzer"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Frame BorderColor="Gray" CornerRadius="10" Padding="10">
+                <VerticalStackLayout>
+                    <Label Text="Оберіть метод аналізу (Стратегію):" FontAttributes="Bold"/>
+                    <Picker x:Name="StrategyPicker" Title="Виберіть API">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>LINQ to XML</x:String>
+                                <x:String>DOM API</x:String>
+                                <x:String>SAX API</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BorderColor="Gray" CornerRadius="10" Padding="10">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Критерії пошуку:" FontAttributes="Bold"/>
+
+                    <Entry x:Name="FacultyEntry" Placeholder="Факультет (напр. ФІОТ)" />
+                    <Entry x:Name="DeptEntry" Placeholder="Кафедра (напр. Інженерії ПЗ)" />
+                    <Entry x:Name="TeacherEntry" Placeholder="Викладач (напр. Олійник)" />
+                    <Entry x:Name="SubjectEntry" Placeholder="Предмет (напр. C#)" />
+
+                    <Grid ColumnDefinitions="*,*">
+                        <Entry x:Name="GroupEntry" Placeholder="Група (напр. ІП-24)" Grid.Column="0" Margin="0,0,5,0"/>
+                        <Entry x:Name="RoomEntry" Placeholder="Аудиторія (напр. 305)" Grid.Column="1" Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button Text="Пошук" 
+                                Clicked="OnSearchClicked" 
+                                BackgroundColor="#512BD4" 
+                                TextColor="White"/>
+
+                        <Button Text="Очистити" 
+                                Clicked="OnClearClicked" 
+                                BackgroundColor="Gray" 
+                                TextColor="White"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Конвертувати в HTML" 
+                        Clicked="OnTransformClicked" 
+                        BackgroundColor="Teal"/>
+
+                <Button Text="Вихід" 
+                        Clicked="OnExitClicked" 
+                        BackgroundColor="Red"/>
+            </HorizontalStackLayout>
+
+            <BoxView HeightRequest="1" Color="Gray" />
+
+            <Label Text="Результати пошуку:" FontSize="18" FontAttributes="Bold" Margin="0,10,0,5"/>
+
+            <Grid ColumnDefinitions="1.2*, 1.5*, 2*, 0.8*, 1.2*, 1.5*" Padding="5" BackgroundColor="#4CAF50">
+                <Label Text="Фак/Каф" FontAttributes="Bold" TextColor="White" Grid.Column="0" LineBreakMode="TailTruncation"/>
+                <Label Text="Викладач" FontAttributes="Bold" TextColor="White" Grid.Column="1" LineBreakMode="TailTruncation"/>
+                <Label Text="Предмет" FontAttributes="Bold" TextColor="White" Grid.Column="2" LineBreakMode="TailTruncation"/>
+                <Label Text="Ауд." FontAttributes="Bold" TextColor="White" Grid.Column="3"/>
+                <Label Text="План" FontAttributes="Bold" TextColor="White" Grid.Column="4"/>
+                <Label Text="Групи" FontAttributes="Bold" TextColor="White" Grid.Column="5"/>
+            </Grid>
+
+            <CollectionView x:Name="ResultsCollection" HeightRequest="300">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="1.2*, 1.5*, 2*, 0.8*, 1.2*, 1.5*" Padding="5">
+
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding Faculty}" FontAttributes="Bold" FontSize="12"/>
+                                <Label Text="{Binding Department}" FontSize="10" TextColor="Gray"/>
+                            </VerticalStackLayout>
+
+                            <Label Text="{Binding TeacherName}" Grid.Column="1" VerticalOptions="Center" FontSize="12"/>
+
+                            <Label Text="{Binding Subject}" Grid.Column="2" VerticalOptions="Center" FontAttributes="Bold" FontSize="12"/>
+
+                            <Label Text="{Binding Room}" Grid.Column="3" VerticalOptions="Center" FontSize="12"/>
+
+                            <VerticalStackLayout Grid.Column="4" VerticalOptions="Center">
+                                <Label Text="{Binding Credits, StringFormat='ECTS: {0}'}" FontSize="11"/>
+                                <Label Text="{Binding Hours, StringFormat='Год: {0}'}" FontSize="11" TextColor="Gray"/>
+                            </VerticalStackLayout>
+
+                            <Label Text="{Binding Groups}" Grid.Column="5" VerticalOptions="Center" FontSize="11" TextColor="#512BD4"/>
+
+                            <BoxView HeightRequest="1" Color="#E0E0E0" Grid.ColumnSpan="6" VerticalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <Label Text="Немає даних для відображення" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Gray"/>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

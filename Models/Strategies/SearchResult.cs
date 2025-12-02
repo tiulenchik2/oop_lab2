@@ -2,13 +2,13 @@
 {
     public class SearchResult
     {
-        public string Faculty { get; set; }
-        public string Department { get; set; }
-        public string TeacherName { get; set; }
-        public string Subject { get; set; }
-        public string Room { get; set; }
-        public string Credits { get; set; }
-        public string Hours { get; set; }
-        public string Groups { get; set; }
+        public string Faculty { get; set; } = string.Empty;
+        public string Department { get; set; } = string.Empty;
+        public string TeacherName { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
+        public string Room { get; set; } = string.Empty;
+        public string Credits { get; set; } = string.Empty;
+        public string Hours { get; set; } = string.Empty;
+        public string Groups { get; set; } = string.Empty;
     }
 }

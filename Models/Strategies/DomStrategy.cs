@@ -16,65 +16,54 @@ namespace OOP_Lab2.Strategies
             try
             {
                 doc.Load(filePath);
-                XmlElement root = doc.DocumentElement;
-
-                // КРОК 1: Проходимо по дереву
-                foreach (XmlNode facultyNode in root.SelectNodes("Faculty"))
+                XmlElement? root = doc.DocumentElement;
+                foreach (XmlNode facultyNode in root?.SelectNodes("Faculty")!)
                 {
-                    string facultyName = facultyNode.Attributes["name"]?.Value ?? "";
+                    string facultyName = facultyNode.Attributes?["name"]?.Value ?? "";
 
-                    // Фільтр Факультету
                     if (!string.IsNullOrEmpty(criteria.Faculty) &&
                         !facultyName.Contains(criteria.Faculty, StringComparison.OrdinalIgnoreCase))
                         continue;
 
-                    foreach (XmlNode deptNode in facultyNode.SelectNodes("Department"))
+                    foreach (XmlNode deptNode in facultyNode.SelectNodes("Department")!)
                     {
-                        string deptName = deptNode.Attributes["name"]?.Value ?? "";
+                        string deptName = deptNode.Attributes?["name"]?.Value ?? "";
 
-                        // Фільтр Кафедри
                         if (!string.IsNullOrEmpty(criteria.Department) &&
                             !deptName.Contains(criteria.Department, StringComparison.OrdinalIgnoreCase))
                             continue;
 
-                        foreach (XmlNode teacherNode in deptNode.SelectNodes("Teacher"))
+                        foreach (XmlNode teacherNode in deptNode.SelectNodes("Teacher")!)
                         {
-                            string teacherName = teacherNode.Attributes["name"]?.Value ?? "";
+                            string teacherName = teacherNode.Attributes?["name"]?.Value ?? "";
 
-                            // Фільтр Викладача
                             if (!string.IsNullOrEmpty(criteria.TeacherName) &&
                                 !teacherName.Contains(criteria.TeacherName, StringComparison.OrdinalIgnoreCase))
                                 continue;
 
-                            foreach (XmlNode subjectNode in teacherNode.SelectNodes("Subject"))
+                            foreach (XmlNode subjectNode in teacherNode.SelectNodes("Subject")!)
                             {
-                                // --- ЗЧИТУВАННЯ ДАНИХ ---
-                                string subjectTitle = subjectNode.Attributes["title"]?.Value ?? "";
-                                string roomAttr = subjectNode.Attributes["room"]?.Value ?? "";
-                                string building = subjectNode.Attributes["building"]?.Value ?? "";
+                                string subjectTitle = subjectNode.Attributes?["title"]?.Value ?? "";
+                                string roomAttr = subjectNode.Attributes?["room"]?.Value ?? "";
+                                string building = subjectNode.Attributes?["building"]?.Value ?? "";
                                 string fullRoom = string.IsNullOrEmpty(building) ? roomAttr : $"{roomAttr} (к.{building})";
-                                string credits = subjectNode.Attributes["credits"]?.Value ?? "-";
-                                string hours = subjectNode.Attributes["hours"]?.Value ?? "-";
+                                string credits = subjectNode.Attributes?["credits"]?.Value ?? "-";
+                                string hours = subjectNode.Attributes?["hours"]?.Value ?? "-";
 
-                                XmlNode groupsNode = subjectNode.SelectSingleNode("Groups");
+                                XmlNode groupsNode = subjectNode.SelectSingleNode("Groups")!;
                                 string groups = groupsNode?.InnerText ?? "";
                                 if (!string.IsNullOrEmpty(criteria.Groups))
                                 {
                                     if (!groups.Contains(criteria.Groups, StringComparison.OrdinalIgnoreCase))
                                         continue;
                                 }
-
-                                // --- ВАЖЛИВО: ФІЛЬТРАЦІЯ ПРЕДМЕТА ТУТ ---
-                                // Якщо ми шукаємо "Бази", а предмет "Основи C#" -> пропускаємо його
                                 if (!string.IsNullOrEmpty(criteria.Subject))
                                 {
                                     if (!subjectTitle.Contains(criteria.Subject, StringComparison.OrdinalIgnoreCase))
                                     {
-                                        continue; // Йдемо до наступного предмета, НЕ ДОДАЮЧИ цей
+                                        continue;
                                     }
                                 }
-
-                                // Фільтр Аудиторії
                                 if (!string.IsNullOrEmpty(criteria.Room))
                                 {
                                     if (!fullRoom.Contains(criteria.Room, StringComparison.OrdinalIgnoreCase))
@@ -82,8 +71,6 @@ namespace OOP_Lab2.Strategies
                                         continue;
                                     }
                                 }
-
-                                // --- ДОДАВАННЯ (ТІЛЬКИ ЯКЩО НЕ БУЛО continue) ---
                                 results.Add(new SearchResult
                                 {
                                     Faculty = facultyName,
@@ -100,10 +87,7 @@ namespace OOP_Lab2.Strategies
                     }
                 }
             }
-            catch
-            {
-                // Ігноруємо помилки
-            }
+            catch { }
             return results;
         }
     }

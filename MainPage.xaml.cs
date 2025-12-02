@@ -72,12 +72,12 @@ namespace OOP_Lab2
             StrategyPicker.SelectedIndex = -1;
             ResultsCollection.ItemsSource = null;
         }
-        private async void OnExitClicked(object sender, EventArgs e, Application? current)
+        private async void OnExitClicked(object sender, EventArgs e)
         {
             bool answer = await DisplayAlertAsync("Підтвердження", "Чи дійсно ви хочете завершити роботу з програмою?", "Так", "Ні");
             if (answer)
             {
-                current?.Quit();
+                Application.Current!.Quit();
             }
         }
         private async void OnTransformClicked(object sender, EventArgs e)
